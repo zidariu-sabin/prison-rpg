@@ -10,13 +10,24 @@ public class NewBehaviourScript : MonoBehaviour
     Rigidbody rigidbody;
     private float _speed=5;
     private Vector2 _move;
+    private float _dash;
     private Vector2 _clickPos;
     private Transform _mtransform;
+    
 
     //Reads the inputted _move
     public void OnMove(InputAction.CallbackContext context)
     {   //_move is a vector 2 for wasd inputs
         _move = context.ReadValue<Vector2>();
+        Debug.Log(_move.x + "" + _move.y + "");
+    }
+
+    public void OnDash(InputAction.CallbackContext context)
+    {   if(context.started)
+        {
+            _dash = context.ReadValue<float>();
+            Debug.Log("spacebar pressed:" + _dash);
+        }
     }
 
     public void OnStrike(InputAction.CallbackContext context)
@@ -45,6 +56,12 @@ public class NewBehaviourScript : MonoBehaviour
     {   
             Vector3 movement = new Vector3(_move.x, 0f, _move.y);
             transform.Translate(Time.deltaTime * movement * _speed, Space.World);
+            if (_dash == 1)
+            {
+                movement *= 40;
+                transform.Translate(Time.deltaTime * movement * _speed, Space.World);
+                _dash = 0;
+            }
     }
 
     public void PointerRotation()
