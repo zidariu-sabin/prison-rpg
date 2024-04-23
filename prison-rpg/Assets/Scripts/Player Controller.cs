@@ -55,11 +55,13 @@ public class NewBehaviourScript : MonoBehaviour
     public void MovePlayer()
     {   
             Vector3 movement = new Vector3(_move.x, 0f, _move.y);
-            transform.Translate(Time.deltaTime * movement * _speed, Space.World);
+            
+            transform.Translate(CalculateMovementDistance(movement), Space.World);
             if (_dash == 1)
-            {
-                movement *= 40;
-                transform.Translate(Time.deltaTime * movement * _speed, Space.World);
+            {   
+                Vector3 startPosition = transform.position;
+                Vector3 desiredPosition = startPosition + CalculateMovementDistance(movement*40);
+                transform.position = Vector3.Lerp(startPosition, desiredPosition, 1f);
                 _dash = 0;
             }
     }
@@ -68,5 +70,10 @@ public class NewBehaviourScript : MonoBehaviour
     {
         Vector3 mousePos = _viewCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y,_viewCamera.transform.position.y));
         transform.LookAt(mousePos + Vector3.up*transform.position.y);
+    }
+    
+    public Vector3 CalculateMovementDistance(Vector3 movement)
+    {
+        return Time.deltaTime * movement * _speed;
     }
 }
