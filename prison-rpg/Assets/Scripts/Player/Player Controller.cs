@@ -13,7 +13,7 @@ public class NewBehaviourScript : MonoBehaviour
     private float _dash;
     private Vector2 _clickPos;
     private Transform _mtransform;
-    
+    private GameObject _Pistol=GameObject.Find("Pistol");
 
     //Reads the inputted _move
     public void OnMove(InputAction.CallbackContext context)
@@ -25,6 +25,7 @@ public class NewBehaviourScript : MonoBehaviour
     public void OnDash(InputAction.CallbackContext context)
     {   if(context.started)
         {
+           // _Pistol.Shoot();
             _dash = context.ReadValue<float>();
             Debug.Log("spacebar pressed:" + _dash);
         }
@@ -32,7 +33,7 @@ public class NewBehaviourScript : MonoBehaviour
 
     public void OnStrike(InputAction.CallbackContext context)
     {   if(context.performed)
-        {
+        {   
             _clickPos = context.ReadValue<Vector2>();
             Debug.Log(_clickPos);
         }
@@ -65,6 +66,7 @@ public class NewBehaviourScript : MonoBehaviour
                 _dash = 0;
             }
     }
+    
 
     public void PointerRotation()
     {
