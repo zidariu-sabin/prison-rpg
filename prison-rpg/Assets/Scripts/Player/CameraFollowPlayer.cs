@@ -11,10 +11,7 @@ public class CameraFollowPlayer : MonoBehaviour
 
     private Vector3 _offset = new Vector3(0, 15, 0);
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+   
 
     
     private void LateUpdate()

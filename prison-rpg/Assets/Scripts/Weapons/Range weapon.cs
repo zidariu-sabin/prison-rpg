@@ -34,8 +34,9 @@ public class Rangeweapon : MonoBehaviour
         bulletsInMagazine = magazineSize;
     }
 
-    private void Shoot()
+    public void Shoot()
     {
         bulletsInMagazine--;
+        Debug.Log("Bullets:"+ bulletsInMagazine);
     }
 }
