@@ -1,9 +1,10 @@
-using System.Collections;
+using  System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Timeline;
 using UnityEngine;
 //Library for input system
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 
 public class NewBehaviourScript : MonoBehaviour
 {
@@ -25,17 +26,41 @@ public class NewBehaviourScript : MonoBehaviour
     public void OnDash(InputAction.CallbackContext context)
     {   if(context.started)
         {
-            
             _dash = context.ReadValue<float>();
             Debug.Log("spacebar pressed:" + _dash);
         }
     }
 
     public void OnStrike(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (_Pistol.automatic)
+            {
+                if (context.interaction is HoldInteraction || context.interaction is TapInteraction)
+                {    Debug.Log("Hold Interaction");
+                    _Pistol.shooting = true;
+                }
+            }
+            else
+            { 
+                if (context.interaction is TapInteraction)
+                {   Debug.Log("Tap Interaction");
+                    _Pistol.shooting = true;
+                }
+            }
+        }
+
+        if (context.canceled )
+        {   Debug.Log("Context canceled");
+            _Pistol.shooting = false;
+        }
+    }
+
+    public void OnReload(InputAction.CallbackContext context)
     {   if(context.performed)
-        {   _Pistol.Shoot();
-            _clickPos = context.ReadValue<Vector2>();
-            Debug.Log(_clickPos);
+        {
+            _Pistol.reloading = true;
         }
     }
 
@@ -44,7 +69,7 @@ public class NewBehaviourScript : MonoBehaviour
     {
         _mtransform = this.transform;
         //  rigidbody = GetComponent<Rigidbody>();
-        _Pistol = FindObjectOfType<Rangeweapon>();
+          _Pistol = FindObjectOfType<Rangeweapon>();
           _viewCamera = Camera.main;
     }
     

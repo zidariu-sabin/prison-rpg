@@ -1783,6 +1783,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: a9f0db87-8b62-424d-9f8b-f1b84fbccde6
     m_ActionName: Player/Dash[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1773921816}
+        m_TargetAssemblyTypeName: NewBehaviourScript, Assembly-CSharp
+        m_MethodName: OnReload
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 110cb8a3-7936-4d57-8338-513af5fdcc32
+    m_ActionName: Player/Reload[/Keyboard/r]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1936,8 +1952,10 @@ MonoBehaviour:
   magazines: 4
   reloadTime: 3
   range: 100
-  automatic: 0
+  automatic: 1
+  shooting: 0
   reloading: 0
+  readyToShoot: 0
 --- !u!1 &2075542186
 GameObject:
   m_ObjectHideFlags: 0

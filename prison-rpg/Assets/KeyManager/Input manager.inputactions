@@ -16,9 +16,9 @@
                 },
                 {
                     "name": "Strike",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "f62ef7c3-6f04-4944-a551-a6629e1592e7",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -27,6 +27,15 @@
                     "name": "Dash",
                     "type": "Button",
                     "id": "a9f0db87-8b62-424d-9f8b-f1b84fbccde6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Reload",
+                    "type": "Button",
+                    "id": "110cb8a3-7936-4d57-8338-513af5fdcc32",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -90,37 +99,15 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "One Modifier",
-                    "id": "ffcee49d-5600-40d7-89a4-4f7df6146088",
-                    "path": "OneModifier",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Strike",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "Modifier",
-                    "id": "2b7da260-b181-453a-a2c7-b32333b5a347",
+                    "name": "",
+                    "id": "9d52ed4a-be3d-4c18-bb94-23e1734c880c",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "",
+                    "interactions": "Hold,Tap",
                     "processors": "",
                     "groups": "",
                     "action": "Strike",
                     "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "Binding",
-                    "id": "2705a0c6-6e28-4646-a4e2-f217ec89bf9d",
-                    "path": "<Pointer>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Strike",
-                    "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 },
                 {
                     "name": "",
@@ -130,6 +117,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1ab33c41-af87-4e97-873d-01011f504ee0",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Reload",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
