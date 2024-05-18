@@ -10,7 +10,7 @@ public class Rangeweapon : MonoBehaviour
     public int magazines=4;
     public float reloadTime=3,range=100f;
     public bool automatic;
-    public bool shooting,reloading=false,readyToShoot;
+    public bool shooting=false,reloading=false,readyToShoot;
     
     
     // Start is called before the first frame update
@@ -20,11 +20,11 @@ public class Rangeweapon : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
         ReloadMagazine();
         Shoot();
+        
     }
 
     public void ReloadMagazine()
@@ -38,11 +38,21 @@ public class Rangeweapon : MonoBehaviour
         reloading = false;
     }
 
-    public void Shoot()
+    public void Shoot(bool tap=false)
     {
+        if (tap)
+        {
+            shooting = tap;
+        }
+        
         if (shooting && bulletsInMagazine >0)
         {
             bulletsInMagazine--; 
+        }
+        
+        if (tap)
+        {
+            shooting = false;
         }
     }
     

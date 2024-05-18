@@ -1,8 +1,8 @@
 {
-    "name": "Input manager",
+    "name": "InputManager",
     "maps": [
         {
-            "name": "Player",
+            "name": "PlayerGameplay",
             "id": "294f2879-8670-4da3-bb12-62b0d6c88205",
             "actions": [
                 {
@@ -102,7 +102,7 @@
                     "name": "",
                     "id": "9d52ed4a-be3d-4c18-bb94-23e1734c880c",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "Hold,Tap",
+                    "interactions": "Tap,Hold",
                     "processors": "",
                     "groups": "",
                     "action": "Strike",
