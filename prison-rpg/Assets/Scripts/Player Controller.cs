@@ -14,6 +14,7 @@ public class NewBehaviourScript : MonoBehaviour
     private Vector2 _clickPos;
     private Transform _mtransform;
     
+    
 
     //Reads the inputted _move
     public void OnMove(InputAction.CallbackContext context)
@@ -53,7 +54,7 @@ public class NewBehaviourScript : MonoBehaviour
     }
 
     public void MovePlayer()
-    {   
+    {
             Vector3 movement = new Vector3(_move.x, 0f, _move.y);
             
             transform.Translate(CalculateMovementDistance(movement), Space.World);
