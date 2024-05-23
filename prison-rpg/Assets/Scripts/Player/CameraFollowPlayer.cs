@@ -9,7 +9,7 @@ public class CameraFollowPlayer : MonoBehaviour
 
     public float smoothSpeed = 0.125f;
 
-    private Vector3 _offset = new Vector3(0, 15, 0);
+    private Vector3 _offset = new Vector3(0, 10, 0);
     // Start is called before the first frame update
    
 

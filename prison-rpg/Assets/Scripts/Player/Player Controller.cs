@@ -6,10 +6,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 
-public class NewBehaviourScript : MonoBehaviour
+public class Player : MonoBehaviour
 {
     Rigidbody rigidbody;
     private float _speed=5;
+    public Vector3 mousePos;
     private Vector2 _move;
     private float _dash;
     private Vector2 _clickPos;
@@ -62,12 +63,12 @@ public class NewBehaviourScript : MonoBehaviour
         SetAllInactive ();
         if (context.interaction is HoldInteraction) {
             _Pistol.shooting = true;
-            Debug.Log("Hold interaction - performed");
+           // Debug.Log("Hold interaction - performed");
         } else
         {
             _Tap = true;
             _Pistol.Shoot(_Tap);
-            Debug.Log("Tap Interaction - performed");
+         //   Debug.Log("Tap Interaction - performed");
         }
     }
 
@@ -125,7 +126,7 @@ public class NewBehaviourScript : MonoBehaviour
 
     public void MovePlayer()
     {   
-           Vector3 movement = new Vector3(_move.x, 0f, _move.y);
+            Vector3 movement = new Vector3(_move.x, 0f, _move.y);
            
             
             transform.Translate(CalculateMovementDistance(movement), Space.World);
@@ -141,7 +142,7 @@ public class NewBehaviourScript : MonoBehaviour
 
     public void PointerRotation()
     {   
-        Vector3 mousePos = _viewCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y,_viewCamera.transform.position.y));
+        mousePos = _viewCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y,_viewCamera.transform.position.y));
         transform.LookAt(mousePos + Vector3.up*transform.position.y);
     }
     
