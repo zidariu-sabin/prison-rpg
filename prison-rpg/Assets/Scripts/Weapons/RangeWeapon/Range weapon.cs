@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class Rangeweapon : MonoBehaviour
@@ -16,6 +17,7 @@ public class Rangeweapon : MonoBehaviour
     private Camera _viewCamera;
     public GameObject bullet;
     public Transform bulletSpawnPoint;
+    private Target target;
     
     
     void Start()
@@ -52,40 +54,47 @@ public class Rangeweapon : MonoBehaviour
         if (shooting && bulletsInMagazine>0)
         {
             bulletsInMagazine--;
-            RaycastHit hit;
-            Ray ray = new Ray(bulletSpawnPoint.position,  bulletSpawnPoint.forward);
-            Vector3 targetPoint;    
-            if (Physics.Raycast(ray, out hit, range))
+            
+            for (int i = 0; i < bulletsPerShot; i++)
             {
-                Debug.Log("Target hit"+hit.transform.name);
-                Debug.Log("Target hit from "+hit.distance);
-               
-                targetPoint = hit.point;
-                
-              //  GameObject currentBullet = Instantiate(bullet, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-              //currentBullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+                bulletSpread *= -1;
+                CreateBullets(bulletSpread);
             }
-            else targetPoint = ray.GetPoint(20);
-            Vector3 directionWithoutSpread = targetPoint - bulletSpawnPoint.position;
-            
-            float x = Random.Range(-bulletSpread, bulletSpread);
-            
-           // spread for shotgun to bullets can go to the side in cone
-            Vector3 directionWithSpread = directionWithoutSpread + new Vector3(x, 0, 0);
-            
-            GameObject currentBullet = Instantiate(bullet, bulletSpawnPoint.position, Quaternion.identity);
-           // Rotate bullet to shoot direction
-            currentBullet.transform.forward = directionWithSpread.normalized;
-            
-            //Add forces to bullet
-            currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * bulletSpeed, ForceMode.Impulse);
-           
         }
+
+       
             
         if (tap)
         {
             shooting = false;
         }
     }
-    
+
+    public void CreateBullets(float x)
+    {
+        RaycastHit hit;
+        Ray ray = new Ray(bulletSpawnPoint.position,  bulletSpawnPoint.forward);
+        Vector3 targetPoint;    
+        if (Physics.Raycast(ray, out hit, range))
+        {
+            targetPoint = hit.point;
+            target = hit.transform.GetComponent<Target>();
+            target?.TakeDamage(damage);
+            // GameObject currentBullet = Instantiate(bullet, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+            // currentBullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+        }
+        else targetPoint = ray.GetPoint(20);
+        Vector3 directionWithoutSpread = targetPoint - bulletSpawnPoint.position;
+        
+        // spread for shotgun to bullets can go to the side in cone
+        Vector3 directionWithSpread = directionWithoutSpread + new Vector3(x, 0, 0);
+            
+        GameObject currentBullet = Instantiate(bullet, bulletSpawnPoint.position, Quaternion.identity);
+        // Rotate bullet to shoot direction
+        currentBullet.transform.forward = directionWithSpread.normalized;
+            
+        //Add forces to bullet
+        currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * bulletSpeed, ForceMode.Impulse);
+
+    }
 }
