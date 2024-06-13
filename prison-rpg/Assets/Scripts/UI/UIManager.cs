@@ -7,19 +7,28 @@ public class UIManager : MonoBehaviour
 {  
    [SerializeField]
    private Text _ammoText;
-   private Rangeweapon _Pistol;
+   private Rangeweapon _rangeWeapon;
 
    public void Start()
    {
-      _Pistol = FindObjectOfType<Rangeweapon>();
+      _rangeWeapon = FindObjectOfType<Rangeweapon>();
    }
 
    public void Update()
    {
-      UpdateAmmo(_Pistol.bulletsInMagazine,_Pistol.magazines);
+      UpdateAmmo(_rangeWeapon.bulletsInMagazine,_rangeWeapon.magazines);
+      Reloading();
    }
    public void UpdateAmmo(int bullets, int magazine)
    {
       _ammoText.text = "Ammo: " + bullets +"/"+magazine;
+   }
+
+   public void Reloading()
+   {
+      if(_rangeWeapon.reloading)
+      {
+         _ammoText.text += System.Environment.NewLine + " Reloading...";
+      }
    }
 }

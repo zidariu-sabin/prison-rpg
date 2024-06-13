@@ -2,22 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.PackageManager;
 using UnityEngine;
+using Quaternion = System.Numerics.Quaternion;
 
 public class Rangeweapon : MonoBehaviour
 {
    // private Player Player;
-    //Need to abstract target mothod to differenciate weapon of enemy vs weapon of player
+    //Need to abstract target mothod to differenciate weapon of enemy vs weapon of player so enemy can shoot according to weapon and poklayer according to input
     //in the present case: select the mouse position to be the target towards which the gun is going to shoot
    // public Vector3 shootingTarget;
-    public float damage=10f;
+    public float weaponDamage=10f, bulletSpeed=30f;
     public int magazineSize = 30, magazines = 4, bulletsInMagazine;
-    public float reloadTime=3,range=10000.0f,bulletsPerShot, bulletSpeed=10f,bulletSpread;
+    public float reloadTime=3,range=10000.0f,bulletsPerShot=1;
     public bool automatic;
-    public bool shooting=false,reloading=false,readyToShoot=true;
+    public bool shooting=false,reload=false,reloading=false;
     private Camera _viewCamera;
     public GameObject bullet;
     public Transform bulletSpawnPoint;
-    private Target target;
     
     
     void Start()
@@ -28,21 +28,25 @@ public class Rangeweapon : MonoBehaviour
         
     void FixedUpdate()
     {
-        ReloadMagazine();
-        Shoot();
-        
+        StartCoroutine(ReloadMagazine());
+            Shoot();
     }
 
-    public void ReloadMagazine()
-    {
-        if (reloading)
+    public IEnumerator ReloadMagazine()
+    {   
+        if (reload && magazines>0)
         {
+            reload = false;
+            reloading = true;
+            yield return new WaitForSeconds(reloadTime);
+            //reloading has to be set to false after function call so function doesn't get triggered multiple times in the reloadtime
             bulletsInMagazine = magazineSize;
-            magazines--;   
+            magazines--;
+            reloading = false;
+            
         }
-
-        reloading = false;
     }
+    
 
     public void Shoot(bool tap=false)
     {
@@ -51,50 +55,45 @@ public class Rangeweapon : MonoBehaviour
             shooting = tap;
         }
         
-        if (shooting && bulletsInMagazine>0)
+        if (shooting && bulletsInMagazine>0 && !reloading)
         {
-            bulletsInMagazine--;
-            
-            for (int i = 0; i < bulletsPerShot; i++)
+            bulletsInMagazine--; 
+            if(bulletsPerShot>1)
             {
-                bulletSpread *= -1;
-                CreateBullets(bulletSpread);
+                float bulletSpread = 5;
+                for (int i = 0; i < bulletsPerShot; i++)
+                {
+                    //function needs to rotate bullet spawnpoint direction in  case spread>0
+                    CreateBullets(bulletSpread);
+                    bulletSpread -= 15/(bulletsPerShot-1);
+                }
+            }
+            else
+            {
+                CreateBullets(0);
             }
         }
-
-       
+         
             
         if (tap)
         {
-            shooting = false;
+            shooting = false;   
         }
     }
 
-    public void CreateBullets(float x)
-    {
-        RaycastHit hit;
-        Ray ray = new Ray(bulletSpawnPoint.position,  bulletSpawnPoint.forward);
-        Vector3 targetPoint;    
-        if (Physics.Raycast(ray, out hit, range))
-        {
-            targetPoint = hit.point;
-            target = hit.transform.GetComponent<Target>();
-            target?.TakeDamage(damage);
-            // GameObject currentBullet = Instantiate(bullet, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-            // currentBullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
-        }
-        else targetPoint = ray.GetPoint(20);
-        Vector3 directionWithoutSpread = targetPoint - bulletSpawnPoint.position;
-        
-        // spread for shotgun to bullets can go to the side in cone
-        Vector3 directionWithSpread = directionWithoutSpread + new Vector3(x, 0, 0);
-            
-        GameObject currentBullet = Instantiate(bullet, bulletSpawnPoint.position, Quaternion.identity);
-        // Rotate bullet to shoot direction
-        currentBullet.transform.forward = directionWithSpread.normalized;
-            
-        //Add forces to bullet
-        currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * bulletSpeed, ForceMode.Impulse);
+    public void CreateBullets(float bulletSpread)
+    {   
+        Vector3 spread = new Vector3(0, bulletSpread, 0);
+        UnityEngine.Quaternion rotation = UnityEngine.Quaternion.Euler(spread) * bulletSpawnPoint.rotation;
+        GameObject currentBullet = Instantiate(bullet, bulletSpawnPoint.position, rotation);
+        GiveBulletStats(currentBullet.GetComponent<BulletScript>());
+    }
 
+    public void GiveBulletStats(BulletScript bulletInstance)
+    { 
+        bulletInstance.carriedDamage = weaponDamage; 
+        bulletInstance.carriedSpeed = bulletSpeed;   
+        bulletInstance.carriedSpeed = bulletSpeed;
+        bulletInstance.carriedDistance = range;
     }
 }
