@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 85896424}
   - component: {fileID: 85896423}
   - component: {fileID: 85896422}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 208314564}
   - component: {fileID: 208314563}
   - component: {fileID: 208314562}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -333,6 +333,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 208314560}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &349674011
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 349674012}
+  m_Layer: 6
+  m_Name: BulletSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &349674012
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349674011}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.309, y: -0.018, z: 2.31}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1178751205}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &526997953
 GameObject:
   m_ObjectHideFlags: 0
@@ -450,7 +481,7 @@ GameObject:
   - component: {fileID: 539567046}
   - component: {fileID: 539567045}
   - component: {fileID: 539567044}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -555,7 +586,7 @@ GameObject:
   - component: {fileID: 571016511}
   - component: {fileID: 571016510}
   - component: {fileID: 571016509}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -660,7 +691,7 @@ GameObject:
   - component: {fileID: 641925763}
   - component: {fileID: 641925762}
   - component: {fileID: 641925761}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -765,7 +796,7 @@ GameObject:
   - component: {fileID: 652729576}
   - component: {fileID: 652729575}
   - component: {fileID: 652729574}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -964,7 +995,7 @@ GameObject:
   - component: {fileID: 723023907}
   - component: {fileID: 723023906}
   - component: {fileID: 723023905}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -980,8 +1011,8 @@ Transform:
   m_GameObject: {fileID: 723023903}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.30065143, y: -0.105, z: 1.1688824}
-  m_LocalScale: {x: 0.23880632, y: 0.13572477, z: 0.6916088}
+  m_LocalPosition: {x: 0.307, y: -0.081, z: 1.1688824}
+  m_LocalScale: {x: 0.30831835, y: 0.1895981, z: 0.6916088}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1178751205}
@@ -1027,7 +1058,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6e13c50e5f200bd22be30b52cea5a8ce, type: 2}
+  - {fileID: 2100000, guid: da972b7d04a31c742a00db4387849f43, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1066,7 +1097,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 823752311}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BulletSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1100,7 +1131,7 @@ GameObject:
   - component: {fileID: 882465766}
   - component: {fileID: 882465765}
   - component: {fileID: 882465764}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1329,7 +1360,7 @@ GameObject:
   - component: {fileID: 1024992278}
   - component: {fileID: 1024992277}
   - component: {fileID: 1024992276}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1638,7 +1669,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1178751205}
-  m_Layer: 0
+  - component: {fileID: 1178751206}
+  m_Layer: 6
   m_Name: Shotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1654,7 +1686,7 @@ Transform:
   m_GameObject: {fileID: 1178751204}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.30365148, y: 0, z: 1.3361177}
+  m_LocalPosition: {x: 0.146, y: 0, z: 0.171}
   m_LocalScale: {x: 1, y: 1, z: 0.78946}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1667,8 +1699,35 @@ Transform:
   - {fileID: 641925760}
   - {fileID: 723023904}
   - {fileID: 882465763}
+  - {fileID: 349674012}
   m_Father: {fileID: 1773921814}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1178751206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178751204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90eef4121ec2c8dd99a75207b2601073, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponDamage: 10
+  bulletSpeed: 1500
+  magazineSize: 2
+  magazines: 7
+  bulletsInMagazine: 0
+  reloadTime: 1
+  range: 5
+  bulletsPerShot: 3
+  automatic: 0
+  shooting: 0
+  reload: 0
+  reloading: 0
+  bullet: {fileID: 4997676059807586767, guid: 0166fa7278fc649a587d46c888d6cb82, type: 3}
+  bulletSpawnPoint: {fileID: 349674012}
 --- !u!1 &1243094872
 GameObject:
   m_ObjectHideFlags: 0
@@ -1681,7 +1740,7 @@ GameObject:
   - component: {fileID: 1243094876}
   - component: {fileID: 1243094875}
   - component: {fileID: 1243094874}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1786,7 +1845,7 @@ GameObject:
   - component: {fileID: 1313113088}
   - component: {fileID: 1313113087}
   - component: {fileID: 1313113086}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1998,7 +2057,7 @@ GameObject:
   - component: {fileID: 1384180231}
   - component: {fileID: 1384180230}
   - component: {fileID: 1384180229}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2209,7 +2268,7 @@ GameObject:
   - component: {fileID: 1521770448}
   - component: {fileID: 1521770447}
   - component: {fileID: 1521770446}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2272,7 +2331,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6e13c50e5f200bd22be30b52cea5a8ce, type: 2}
+  - {fileID: 2100000, guid: da972b7d04a31c742a00db4387849f43, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2314,7 +2373,7 @@ GameObject:
   - component: {fileID: 1689124821}
   - component: {fileID: 1689124820}
   - component: {fileID: 1689124819}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2377,7 +2436,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6e13c50e5f200bd22be30b52cea5a8ce, type: 2}
+  - {fileID: 2100000, guid: da972b7d04a31c742a00db4387849f43, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2419,7 +2478,7 @@ GameObject:
   - component: {fileID: 1692068310}
   - component: {fileID: 1692068309}
   - component: {fileID: 1692068308}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2727,7 +2786,7 @@ GameObject:
   - component: {fileID: 1918022439}
   - component: {fileID: 1918022438}
   - component: {fileID: 1918022437}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2830,13 +2889,13 @@ GameObject:
   m_Component:
   - component: {fileID: 2012896537}
   - component: {fileID: 2012896538}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2012896537
 Transform:
   m_ObjectHideFlags: 0
@@ -2878,8 +2937,8 @@ MonoBehaviour:
   magazines: 4
   bulletsInMagazine: 0
   reloadTime: 2
-  range: 10000
-  bulletsPerShot: 3
+  range: 15
+  bulletsPerShot: 1
   automatic: 0
   shooting: 0
   reload: 0
