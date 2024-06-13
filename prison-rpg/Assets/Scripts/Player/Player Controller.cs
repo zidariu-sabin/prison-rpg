@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     private Vector2 _clickPos;
     private Rangeweapon _rangeWeapon;
     private InputManager _inputManager;
+    private PickUpController _pickUpController;
     private bool _Tap;
     
     private void Awake()
@@ -42,6 +43,14 @@ public class Player : MonoBehaviour
        _inputManager.PlayerGameplay.Reload.performed += OnReloadPerformed;
        _inputManager.PlayerGameplay.Reload.canceled += OnReloadCanceled;
        _inputManager.PlayerGameplay.Reload.Enable();
+       
+       _inputManager.PlayerGameplay.Equip.performed += OnEquip;
+       _inputManager.PlayerGameplay.Equip.Enable();
+       
+       _inputManager.PlayerGameplay.Drop.performed += OnDrop;
+       _inputManager.PlayerGameplay.Drop.Enable();
+       
+       
     }
 
     //Reads the inputted _move
@@ -96,6 +105,17 @@ public class Player : MonoBehaviour
     {   
         _rangeWeapon.reload = false;
     }
+    
+    public void OnEquip(InputAction.CallbackContext context)
+    {
+        _pickUpController.equip = context.ReadValue<float>();
+      //  Debug.Log("spacebar pressed:" + _dash);
+    }
+    public void OnDrop(InputAction.CallbackContext context)
+    {
+        _pickUpController.drop = context.ReadValue<float>();
+      //  Debug.Log("spacebar pressed:" + _dash);
+    }
 
     private void OnDisable()
     {
@@ -114,6 +134,12 @@ public class Player : MonoBehaviour
         _inputManager.PlayerGameplay.Reload.performed -= OnReloadPerformed;
         _inputManager.PlayerGameplay.Reload.Disable();
         
+        _inputManager.PlayerGameplay.Equip.performed -= OnDash;
+        _inputManager.PlayerGameplay.Equip.Disable();
+        
+        _inputManager.PlayerGameplay.Drop.performed -= OnDash;
+        _inputManager.PlayerGameplay.Drop.Disable();
+        
     }
     private void SetAllInactive ()
     {
@@ -129,7 +155,7 @@ public class Player : MonoBehaviour
     }
     
     void Update()
-    {  
+    { 
         MovePlayer();
         PointerRotation();
     }

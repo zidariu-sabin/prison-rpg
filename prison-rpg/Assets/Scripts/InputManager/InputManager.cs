@@ -62,6 +62,24 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Equip"",
+                    ""type"": ""Button"",
+                    ""id"": ""7e55ff22-1626-4632-b6ff-24c1798732b5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Drop"",
+                    ""type"": ""Button"",
+                    ""id"": ""8c33245b-ea2c-444b-840a-7357a2e94e10"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -152,6 +170,28 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""action"": ""Reload"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""66dcbd61-d717-4cb2-a42b-b06a364c4494"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Equip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f5ca2f53-34d6-49ee-b0a4-0143715aca34"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -164,6 +204,8 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         m_PlayerGameplay_Strike = m_PlayerGameplay.FindAction("Strike", throwIfNotFound: true);
         m_PlayerGameplay_Dash = m_PlayerGameplay.FindAction("Dash", throwIfNotFound: true);
         m_PlayerGameplay_Reload = m_PlayerGameplay.FindAction("Reload", throwIfNotFound: true);
+        m_PlayerGameplay_Equip = m_PlayerGameplay.FindAction("Equip", throwIfNotFound: true);
+        m_PlayerGameplay_Drop = m_PlayerGameplay.FindAction("Drop", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -229,6 +271,8 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerGameplay_Strike;
     private readonly InputAction m_PlayerGameplay_Dash;
     private readonly InputAction m_PlayerGameplay_Reload;
+    private readonly InputAction m_PlayerGameplay_Equip;
+    private readonly InputAction m_PlayerGameplay_Drop;
     public struct PlayerGameplayActions
     {
         private @InputManager m_Wrapper;
@@ -237,6 +281,8 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         public InputAction @Strike => m_Wrapper.m_PlayerGameplay_Strike;
         public InputAction @Dash => m_Wrapper.m_PlayerGameplay_Dash;
         public InputAction @Reload => m_Wrapper.m_PlayerGameplay_Reload;
+        public InputAction @Equip => m_Wrapper.m_PlayerGameplay_Equip;
+        public InputAction @Drop => m_Wrapper.m_PlayerGameplay_Drop;
         public InputActionMap Get() { return m_Wrapper.m_PlayerGameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -258,6 +304,12 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @Reload.started += instance.OnReload;
             @Reload.performed += instance.OnReload;
             @Reload.canceled += instance.OnReload;
+            @Equip.started += instance.OnEquip;
+            @Equip.performed += instance.OnEquip;
+            @Equip.canceled += instance.OnEquip;
+            @Drop.started += instance.OnDrop;
+            @Drop.performed += instance.OnDrop;
+            @Drop.canceled += instance.OnDrop;
         }
 
         private void UnregisterCallbacks(IPlayerGameplayActions instance)
@@ -274,6 +326,12 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @Reload.started -= instance.OnReload;
             @Reload.performed -= instance.OnReload;
             @Reload.canceled -= instance.OnReload;
+            @Equip.started -= instance.OnEquip;
+            @Equip.performed -= instance.OnEquip;
+            @Equip.canceled -= instance.OnEquip;
+            @Drop.started -= instance.OnDrop;
+            @Drop.performed -= instance.OnDrop;
+            @Drop.canceled -= instance.OnDrop;
         }
 
         public void RemoveCallbacks(IPlayerGameplayActions instance)
@@ -297,5 +355,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         void OnStrike(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
+        void OnEquip(InputAction.CallbackContext context);
+        void OnDrop(InputAction.CallbackContext context);
     }
 }
