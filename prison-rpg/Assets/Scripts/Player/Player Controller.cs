@@ -20,13 +20,13 @@ public class Player : MonoBehaviour
     private Vector2 _move;
     private float _dash;
     private Vector2 _clickPos;
-    private Rangeweapon _Pistol;
+    private Rangeweapon _rangeWeapon;
     private InputManager _inputManager;
     private bool _Tap;
     
     private void Awake()
     {
-        _Pistol = FindObjectOfType<Rangeweapon>();
+        _rangeWeapon = FindObjectOfType<Rangeweapon>();
         _inputManager = new InputManager(); 
     }
 
@@ -46,6 +46,7 @@ public class Player : MonoBehaviour
        _inputManager.PlayerGameplay.Strike.Enable();
 
        _inputManager.PlayerGameplay.Reload.performed += OnReloadPerformed;
+       _inputManager.PlayerGameplay.Reload.canceled += OnReloadCanceled;
        _inputManager.PlayerGameplay.Reload.Enable();
     }
 
@@ -67,21 +68,27 @@ public class Player : MonoBehaviour
     private void OnStrikePerformed(InputAction.CallbackContext context)
     {
         SetAllInactive ();
-        if (context.interaction is HoldInteraction) {
-            _Pistol.shooting = true;
-           // Debug.Log("Hold interaction - performed");
-        } else
+        if (_rangeWeapon.automatic)
         {
+            if (context.interaction is HoldInteraction) {
+                _rangeWeapon.shooting = true;
+            } else
+            {
+                _Tap = true;
+                _rangeWeapon.Shoot(_Tap);
+            }
+        }
+        else
+        if (context.interaction is TapInteraction) {
             _Tap = true;
-            _Pistol.Shoot(_Tap);
-         //   Debug.Log("Tap Interaction - performed");
+            _rangeWeapon.Shoot(_Tap);
         }
     }
 
     private void OnStrikeCanceled(InputAction.CallbackContext context)
     {
         SetAllInactive ();
-        _Pistol.shooting = false;
+        _rangeWeapon.shooting = false;
         Debug.Log("Hold interaction - canceled");
     }
     
@@ -89,8 +96,11 @@ public class Player : MonoBehaviour
 
     public void OnReloadPerformed(InputAction.CallbackContext context)
     {   
-            _Pistol.reloading = true;
-        
+            _rangeWeapon.reload = true;
+    }
+    public void OnReloadCanceled(InputAction.CallbackContext context)
+    {   
+        _rangeWeapon.reload = false;
     }
 
     private void OnDisable()
@@ -114,7 +124,7 @@ public class Player : MonoBehaviour
     private void SetAllInactive ()
     {
         _Tap = false;
-        _Pistol.shooting = false;
+        _rangeWeapon.shooting = false;
     }
 
     private Camera _viewCamera;
