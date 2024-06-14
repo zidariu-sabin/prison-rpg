@@ -18,11 +18,4 @@ public class Health : MonoBehaviour
     {
         
     }
-
-    void TakeDamage(int amount) { 
-        currentHealth -= amount;
-        if (currentHealth <= 0) { 
-            alive = false;
-        }
-    }
 }
