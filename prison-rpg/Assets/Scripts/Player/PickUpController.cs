@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class PickUpController : MonoBehaviour
 {
-    public Rangeweapon  RangeWeaponScript;
+    private GameObject _weapon;
+    // i want to be able to pick up a weapon
+    public Rangeweapon  rangeWeaponScript;
     public Rigidbody rb;
     public BoxCollider coll;
-    public Transform player, gunContainer;
+    public Transform player, weaponSlot;
 
     public float pickUpRange;
     public float dropForwardForce, dropUpwardForce;
@@ -17,19 +19,20 @@ public class PickUpController : MonoBehaviour
 
     public float drop;
     public float equip;
-
+    
+    
     private void Start()
     {         
         //Setup
         if (!equipped)
         {
-            RangeWeaponScript.enabled = false;
+            rangeWeaponScript.enabled = false;
             rb.isKinematic = false;
             coll.isTrigger = false;
         }
         if (equipped)
         {
-            RangeWeaponScript.enabled = true;
+            rangeWeaponScript.enabled = true;
             rb.isKinematic = true;
             coll.isTrigger = true;
             slotFull = true;
@@ -52,7 +55,7 @@ public class PickUpController : MonoBehaviour
         slotFull = true;
 
         //Make weapon a child of the camera and move it to default position
-        transform.SetParent(gunContainer);
+        transform.SetParent(weaponSlot);
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.Euler(Vector3.zero);
         transform.localScale = Vector3.one;
@@ -62,7 +65,7 @@ public class PickUpController : MonoBehaviour
         coll.isTrigger = true;
 
         //Enable script
-        RangeWeaponScript.enabled = true;
+        rangeWeaponScript.enabled = true;
     }
 
     private void Drop()
@@ -81,13 +84,13 @@ public class PickUpController : MonoBehaviour
         rb.velocity = player.GetComponent<Rigidbody>().velocity;
 
         //AddForce
-        rb.AddForce(gunContainer.forward * dropForwardForce, ForceMode.Impulse);
-        rb.AddForce(gunContainer.up * dropUpwardForce, ForceMode.Impulse);
+        rb.AddForce(weaponSlot.forward * dropForwardForce, ForceMode.Impulse);
+        rb.AddForce(weaponSlot.up * dropUpwardForce, ForceMode.Impulse);
         //Add random rotation
         float random = Random.Range(-1f, 1f);
         rb.AddTorque(new Vector3(random, random, random) * 10);
 
         //Disable script
-        RangeWeaponScript.enabled = false;
+        rangeWeaponScript.enabled = false;
     }
 }

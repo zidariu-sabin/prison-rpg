@@ -15,14 +15,20 @@ public class Player : MonoBehaviour
     private float _dash;
     private Vector2 _clickPos;
     private Rangeweapon _rangeWeapon;
-    private InputManager _inputManager;
-    private PickUpController _pickUpController;
     private bool _Tap;
+    private InputManager _inputManager;
+    //must be initialized i awake function
+    private PickUpController _pickUpController;
+    private WeaponContainer _weaponContainer;
+    
+  
     
     private void Awake()
     {
-        _rangeWeapon = FindObjectOfType<Rangeweapon>();
-        _inputManager = new InputManager(); 
+        //_rangeWeapon = FindObjectOfType<Rangeweapon>();
+        _weaponContainer = GetComponentInChildren<WeaponContainer>();
+        _inputManager = new InputManager();
+        SetHoldableItemsInactive();
     }
 
     public void OnEnable()
@@ -50,6 +56,11 @@ public class Player : MonoBehaviour
        _inputManager.PlayerGameplay.Drop.performed += OnDrop;
        _inputManager.PlayerGameplay.Drop.Enable();
        
+       _inputManager.PlayerGameplay.SelectWeaponSlot1.performed += OnSelectWeaponSlot1;
+       _inputManager.PlayerGameplay.SelectWeaponSlot1.Enable();
+       
+       _inputManager.PlayerGameplay.SelectWeaponSlot2.performed += OnSelectWeaponSlot2;
+       _inputManager.PlayerGameplay.SelectWeaponSlot2.Enable();
        
     }
 
@@ -70,7 +81,7 @@ public class Player : MonoBehaviour
   
     private void OnStrikePerformed(InputAction.CallbackContext context)
     {
-        SetAllInactive ();
+        SetShootingInactive ();
         if (_rangeWeapon.automatic)
         {
             if (context.interaction is HoldInteraction) {
@@ -90,7 +101,7 @@ public class Player : MonoBehaviour
 
     private void OnStrikeCanceled(InputAction.CallbackContext context)
     {
-        SetAllInactive ();
+        SetShootingInactive ();
         _rangeWeapon.shooting = false;
         Debug.Log("Hold interaction - canceled");
     }
@@ -116,6 +127,21 @@ public class Player : MonoBehaviour
         _pickUpController.drop = context.ReadValue<float>();
       //  Debug.Log("spacebar pressed:" + _dash);
     }
+    public void OnSelectWeaponSlot1(InputAction.CallbackContext context)
+    {
+        SetHoldableItemsInactive();
+        _rangeWeapon = FindObjectOfType<Rangeweapon>();
+        _weaponContainer._weaponSlot1.weapon.SetActive(true);
+        _rangeWeapon =_weaponContainer._weaponSlot1.weapon.GetComponent<Rangeweapon>() ;
+        Debug.Log("weaponSlot selected: 2");
+    }
+    public void OnSelectWeaponSlot2(InputAction.CallbackContext context)
+    {
+        SetHoldableItemsInactive();
+        _weaponContainer._weaponSlot2.weapon.SetActive(true);
+        _rangeWeapon =_weaponContainer._weaponSlot2.weapon.GetComponent<Rangeweapon>() ;
+        Debug.Log("spacebar slotSelected: 2" );
+    }
 
     private void OnDisable()
     {
@@ -140,11 +166,23 @@ public class Player : MonoBehaviour
         _inputManager.PlayerGameplay.Drop.performed -= OnDrop;
         _inputManager.PlayerGameplay.Drop.Disable();
         
+        _inputManager.PlayerGameplay.SelectWeaponSlot1.performed -= OnSelectWeaponSlot1;
+        _inputManager.PlayerGameplay.SelectWeaponSlot1.Enable();
+       
+        _inputManager.PlayerGameplay.SelectWeaponSlot2.performed -= OnSelectWeaponSlot2;
+        _inputManager.PlayerGameplay.SelectWeaponSlot2.Disable();
+        
     }
-    private void SetAllInactive ()
+    private void SetShootingInactive ()
     {
         _Tap = false;
         _rangeWeapon.shooting = false;
+    }
+
+    private void SetHoldableItemsInactive()
+    {
+        _weaponContainer._weaponSlot1.weapon.SetActive(false);
+        _weaponContainer._weaponSlot2.weapon.SetActive(false);
     }
 
     private Camera _viewCamera;

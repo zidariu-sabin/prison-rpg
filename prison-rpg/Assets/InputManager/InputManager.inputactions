@@ -60,7 +60,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "WeaponSlot1",
+                    "name": "SelectWeaponSlot1",
                     "type": "Button",
                     "id": "e1c15b83-d3e6-4adf-9e75-64dda4ea5078",
                     "expectedControlType": "Button",
@@ -69,7 +69,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "WeaponSlot2",
+                    "name": "SelectWeaponSlot2",
                     "type": "Button",
                     "id": "ef5d7446-6875-48d6-8c10-c8eb653b0750",
                     "expectedControlType": "Button",
@@ -196,7 +196,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "WeaponSlot1",
+                    "action": "SelectWeaponSlot1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -207,7 +207,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "WeaponSlot2",
+                    "action": "SelectWeaponSlot2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
