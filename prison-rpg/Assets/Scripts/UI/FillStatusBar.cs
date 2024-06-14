@@ -5,13 +5,14 @@ using UnityEngine.UI;
 
 public class FillStatusBar : MonoBehaviour
 {
-    public Health playerHealth;
+    public Target target;
     public Image fillimage;
     private Slider slider;
 
     // Start is called before the first frame update
     void Awake()
-    {
+    {   
+        target = GetComponentInParent<Target>();
         slider = GetComponent<Slider>();
         slider.value = slider.maxValue;
     }
@@ -19,9 +20,9 @@ public class FillStatusBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerHealth != null)
+        if (target != null)
         {
-            float fillValue = (float)playerHealth.currentHealth / playerHealth.maxHealth; // Ensure float division
+            float fillValue = (float)target.currentHealth / target.maxHealth;
             slider.value = fillValue;
 
             if (slider.value <= slider.minValue)
@@ -32,7 +33,7 @@ public class FillStatusBar : MonoBehaviour
             {
                 fillimage.enabled = true;
 
-                if (fillValue <= 1f / 3f) // Changed to ensure correct float comparison
+                if (fillValue <= 1f / 3f)
                 {
                     fillimage.color = Color.red;
                 }
