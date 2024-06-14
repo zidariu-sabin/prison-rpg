@@ -107,9 +107,9 @@ public class Player : MonoBehaviour
     }
     
     public void OnEquip(InputAction.CallbackContext context)
-    {
+    {   Debug.Log("equip pressed:" + context.ReadValue<float>());
         _pickUpController.equip = context.ReadValue<float>();
-      //  Debug.Log("spacebar pressed:" + _dash);
+        Debug.Log("equip pressed:" + context);
     }
     public void OnDrop(InputAction.CallbackContext context)
     {
@@ -134,10 +134,10 @@ public class Player : MonoBehaviour
         _inputManager.PlayerGameplay.Reload.performed -= OnReloadPerformed;
         _inputManager.PlayerGameplay.Reload.Disable();
         
-        _inputManager.PlayerGameplay.Equip.performed -= OnDash;
+        _inputManager.PlayerGameplay.Equip.performed -= OnEquip;
         _inputManager.PlayerGameplay.Equip.Disable();
         
-        _inputManager.PlayerGameplay.Drop.performed -= OnDash;
+        _inputManager.PlayerGameplay.Drop.performed -= OnDrop;
         _inputManager.PlayerGameplay.Drop.Disable();
         
     }

@@ -7,7 +7,7 @@ public class PickUpController : MonoBehaviour
     public Rangeweapon  RangeWeaponScript;
     public Rigidbody rb;
     public BoxCollider coll;
-    public Transform player, gunContainer, fpsCam;
+    public Transform player, gunContainer;
 
     public float pickUpRange;
     public float dropForwardForce, dropUpwardForce;
@@ -81,8 +81,8 @@ public class PickUpController : MonoBehaviour
         rb.velocity = player.GetComponent<Rigidbody>().velocity;
 
         //AddForce
-        rb.AddForce(fpsCam.forward * dropForwardForce, ForceMode.Impulse);
-        rb.AddForce(fpsCam.up * dropUpwardForce, ForceMode.Impulse);
+        rb.AddForce(gunContainer.forward * dropForwardForce, ForceMode.Impulse);
+        rb.AddForce(gunContainer.up * dropUpwardForce, ForceMode.Impulse);
         //Add random rotation
         float random = Random.Range(-1f, 1f);
         rb.AddTorque(new Vector3(random, random, random) * 10);
