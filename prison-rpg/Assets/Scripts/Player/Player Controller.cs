@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
 
     public Vector3 mousePos;
     private Vector2 _move;
-    private float _dash;
+    public float _dash;
     private Vector2 _clickPos;
     private Rangeweapon _rangeWeapon;
     private bool _Tap;
@@ -54,10 +54,12 @@ public class Player : MonoBehaviour
         _inputManager.PlayerGameplay.Reload.canceled += OnReloadCanceled;
         _inputManager.PlayerGameplay.Reload.Enable();
 
-        _inputManager.PlayerGameplay.Equip.performed += OnEquip;
+        _inputManager.PlayerGameplay.Equip.performed += OnEquipPerformed;
+        _inputManager.PlayerGameplay.Equip.canceled += OnEquipCanceled;
         _inputManager.PlayerGameplay.Equip.Enable();
 
-        _inputManager.PlayerGameplay.Drop.performed += OnDrop;
+        _inputManager.PlayerGameplay.Drop.performed += OnDropPerformed;
+        _inputManager.PlayerGameplay.Drop.canceled += OnDropCanceled;
         _inputManager.PlayerGameplay.Drop.Enable();
 
         _inputManager.PlayerGameplay.SelectWeaponSlot1.performed += OnSelectWeaponSlot1;
@@ -118,18 +120,28 @@ public class Player : MonoBehaviour
         _rangeWeapon.reload = false;
     }
 
-    public void OnEquip(InputAction.CallbackContext context)
+    
+    
+    public void OnEquipPerformed(InputAction.CallbackContext context)
     {
         equip = context.ReadValue<float>();
         Debug.Log("equip pressed:" + equip);
         // Debug.Log("equip pressed:" + context);
     }
+    public void OnEquipCanceled(InputAction.CallbackContext context)
+    {
+        equip = 0;
+    }
 
-    public void OnDrop(InputAction.CallbackContext context)
+    public void OnDropPerformed(InputAction.CallbackContext context)
     {
         // Debug.Log("drop pressed:" + context.ReadValue<float>());
         drop = context.ReadValue<float>();
         Debug.Log("drop pressed:" + drop);
+    }
+    public void OnDropCanceled(InputAction.CallbackContext context)
+    {
+        drop = 0;
     }
 
     public void OnSelectWeaponSlot1(InputAction.CallbackContext context)
@@ -138,7 +150,7 @@ public class Player : MonoBehaviour
         _weaponContainer._weaponSlot1.gameObject.SetActive(true);
         _rangeWeapon = _weaponContainer._weaponSlot1.weapon.GetComponent<Rangeweapon>();
         // _pickUpController = _weaponContainer._weaponSlot1.GetComponent<PickUpController>();
-        Debug.Log("weaponSlot selected: 1");
+        //Debug.Log("weaponSlot selected: 1");
     }
 
     public void OnSelectWeaponSlot2(InputAction.CallbackContext context)
@@ -147,7 +159,7 @@ public class Player : MonoBehaviour
         _weaponContainer._weaponSlot2.gameObject.SetActive(true);
         _rangeWeapon = _weaponContainer._weaponSlot2.weapon.GetComponent<Rangeweapon>();
         // _pickUpController = _weaponContainer._weaponSlot2.GetComponent<PickUpController>();
-        Debug.Log("spacebar slotSelected: 2");
+       // Debug.Log("weaponSlot Selected: 2");
     }
 
     private void OnDisable()
@@ -167,10 +179,12 @@ public class Player : MonoBehaviour
         _inputManager.PlayerGameplay.Reload.performed -= OnReloadPerformed;
         _inputManager.PlayerGameplay.Reload.Disable();
 
-        _inputManager.PlayerGameplay.Equip.performed -= OnEquip;
+        _inputManager.PlayerGameplay.Equip.performed -= OnEquipPerformed;
+        _inputManager.PlayerGameplay.Equip.canceled -= OnEquipCanceled;
         _inputManager.PlayerGameplay.Equip.Disable();
 
-        _inputManager.PlayerGameplay.Drop.performed -= OnDrop;
+        _inputManager.PlayerGameplay.Drop.performed -= OnDropPerformed;
+        _inputManager.PlayerGameplay.Drop.performed -= OnDropCanceled;
         _inputManager.PlayerGameplay.Drop.Disable();
 
         _inputManager.PlayerGameplay.SelectWeaponSlot1.performed -= OnSelectWeaponSlot1;
@@ -250,5 +264,19 @@ public class Player : MonoBehaviour
             yield return null;
         }
         // Ensure the final velocity is capped at maxSpeed
-        rb
+        rb.velocity = movement.normalized * maxSpeed;
+    }
+
+
+    public void PointerRotation()
+    {   
+        mousePos = _viewCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y,_viewCamera.transform.position.y));
+        transform.LookAt(mousePos + Vector3.up*transform.position.y);
+    }
+    
+    public Vector3 CalculateMovementDistance(Vector3 movement)
+    {
+        return Time.deltaTime * movement * _speed;
+    }
+}
 

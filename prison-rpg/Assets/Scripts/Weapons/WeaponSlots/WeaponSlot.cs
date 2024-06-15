@@ -13,9 +13,9 @@ public class WeaponSlot : MonoBehaviour
         
     }
 
-    void Awake()
+    void OnEnable()
     {
-        rangeWeapon = GetComponentInChildren<Rangeweapon>(true);
+        rangeWeapon = GetComponentInChildren<Rangeweapon>();
         weapon = rangeWeapon.gameObject;
     }
     

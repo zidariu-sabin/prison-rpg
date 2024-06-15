@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,10 +14,10 @@ public class PickUpController : MonoBehaviour
     private BoxCollider _coll;
     private Rigidbody _rangeWeaponRb;
     //public Transform player, _weaponSlot;
-    private Transform _weaponSlot;
+    private GameObject _weaponSlot;
     public GameObject player;
 
-    public float pickUpRange;
+    public float pickUpRange=15;
     public float dropForwardForce, dropUpwardForce;
 
     public bool equipped;
@@ -28,21 +28,14 @@ public class PickUpController : MonoBehaviour
     private void OnEnable()
     {
         //Setup
-        _weaponSlot = player.GetComponentInChildren<WeaponContainer>().gameObject.GetComponentInChildren<WeaponSlot>().gameObject.GetComponent<Transform>(); 
+        _weaponSlot = player.GetComponentInChildren<WeaponContainer>().gameObject.GetComponentInChildren<WeaponSlot>().gameObject; 
         _rangeWeaponScript = GetComponent<Rangeweapon>();
         _rangeWeaponRb = _rangeWeaponScript.rb;
         _coll = _rangeWeaponScript.coll;
-        if (_weaponSlot == null)
-        {
-            Debug.Log("Slot not found "+_weaponSlot);
-        }
-        else
-        {
-            Debug.Log("Slot found "+_weaponSlot);
-
-        }
       
     }
+
+    
 
     private void Start()
     {        
@@ -67,11 +60,19 @@ public class PickUpController : MonoBehaviour
     private void Update()
     {
         //Check if player is in range and "E" is pressed
-        transform.rotation = _weaponSlot.rotation;
-        Vector3 distanceToPlayer = player.transform.position - transform.position;
-        if (!equipped && distanceToPlayer.magnitude <= pickUpRange && player.GetComponent<Player>().equip!=0 && !slotFull)
+       if(equipped)
+       {
+           transform.rotation = _weaponSlot.transform.rotation;
+       }
+        
+        if (!equipped  && player.GetComponent<Player>().equip!=0 && !slotFull)
         {
-            PickUp();
+            Vector3 distanceToPlayer = player.transform.position - transform.position;
+            Debug.Log(distanceToPlayer.magnitude);
+            if(distanceToPlayer.magnitude <= pickUpRange)
+            {
+                PickUp();
+            }
         }
 
         //Drop if equipped and "Q" is pressed
@@ -86,8 +87,11 @@ public class PickUpController : MonoBehaviour
         equipped = true;
         slotFull = true;
 
+        _weaponSlot = player.GetComponentInChildren<WeaponContainer>().GetComponentInChildren<WeaponSlot>().gameObject;
+        
+
         //Make weapon a child of the camera and move it to default position
-        transform.SetParent(_weaponSlot);
+        transform.SetParent(_weaponSlot.transform);
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.Euler(Vector3.zero);
         transform.localScale = Vector3.one;
@@ -116,13 +120,16 @@ public class PickUpController : MonoBehaviour
         _rangeWeaponRb.velocity = player.GetComponent<Rigidbody>().velocity;
 
         //AddForce
-        _rangeWeaponRb.AddForce(_weaponSlot.forward * dropForwardForce, ForceMode.Impulse);
-        _rangeWeaponRb.AddForce(_weaponSlot.up * dropUpwardForce, ForceMode.Impulse);
+        _rangeWeaponRb.AddForce(_weaponSlot.transform.forward * dropForwardForce, ForceMode.Impulse);
+        _rangeWeaponRb.AddForce(_weaponSlot.transform.up * dropUpwardForce, ForceMode.Impulse);
         //Add random rotation
         float random = Random.Range(-1f, 1f);
         _rangeWeaponRb.AddTorque(new Vector3(random, random, random) * 10);
 
         //Disable script
         _rangeWeaponScript.enabled = false;
+        //setting weaponslot to null so weapon doesn't follow rotation and position of it(sloppy but gets the job done)
+        _weaponSlot = null;
+        // _weaponSlot.GetComponent<WeaponSlot>().rangeWeapon = null;
     }
 }
