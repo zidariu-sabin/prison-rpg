@@ -133,7 +133,7 @@ public class Player : MonoBehaviour
         _rangeWeapon = FindObjectOfType<Rangeweapon>();
         _weaponContainer._weaponSlot1.weapon.SetActive(true);
         _rangeWeapon =_weaponContainer._weaponSlot1.weapon.GetComponent<Rangeweapon>() ;
-        Debug.Log("weaponSlot selected: 2");
+        Debug.Log("weaponSlot selected: 1");
     }
     public void OnSelectWeaponSlot2(InputAction.CallbackContext context)
     {
@@ -182,7 +182,9 @@ public class Player : MonoBehaviour
     private void SetHoldableItemsInactive()
     {
         _weaponContainer._weaponSlot1.weapon.SetActive(false);
+        _weaponContainer._weaponSlot1.weapon.GetComponent<Rangeweapon>().reloading = false;
         _weaponContainer._weaponSlot2.weapon.SetActive(false);
+        _weaponContainer._weaponSlot2.weapon.GetComponent<Rangeweapon>().reloading = false;
     }
 
     private Camera _viewCamera;
