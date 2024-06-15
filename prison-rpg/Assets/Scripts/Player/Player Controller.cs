@@ -18,8 +18,10 @@ public class Player : MonoBehaviour
     private bool _Tap;
     private InputManager _inputManager;
     //must be initialized i awake function
-    private PickUpController _pickUpController;
+ //   private PickUpController _pickUpController;
     private WeaponContainer _weaponContainer;
+    public float drop;
+    public float equip;
     
   
     
@@ -118,28 +120,31 @@ public class Player : MonoBehaviour
     }
     
     public void OnEquip(InputAction.CallbackContext context)
-    {   Debug.Log("equip pressed:" + context.ReadValue<float>());
-        _pickUpController.equip = context.ReadValue<float>();
-        Debug.Log("equip pressed:" + context);
+    {   
+        equip = context.ReadValue<float>();
+        Debug.Log("equip pressed:" + equip);
+       // Debug.Log("equip pressed:" + context);
     }
     public void OnDrop(InputAction.CallbackContext context)
     {
-        _pickUpController.drop = context.ReadValue<float>();
-      //  Debug.Log("spacebar pressed:" + _dash);
+       // Debug.Log("drop pressed:" + context.ReadValue<float>());
+        drop = context.ReadValue<float>();
+        Debug.Log("drop pressed:" + drop);
     }
     public void OnSelectWeaponSlot1(InputAction.CallbackContext context)
     {
         SetHoldableItemsInactive();
-        _rangeWeapon = FindObjectOfType<Rangeweapon>();
-        _weaponContainer._weaponSlot1.weapon.SetActive(true);
+        _weaponContainer._weaponSlot1.gameObject.SetActive(true);
         _rangeWeapon =_weaponContainer._weaponSlot1.weapon.GetComponent<Rangeweapon>() ;
+     //   _pickUpController = _weaponContainer._weaponSlot1.GetComponent<PickUpController>();
         Debug.Log("weaponSlot selected: 1");
     }
     public void OnSelectWeaponSlot2(InputAction.CallbackContext context)
     {
         SetHoldableItemsInactive();
-        _weaponContainer._weaponSlot2.weapon.SetActive(true);
+        _weaponContainer._weaponSlot2.gameObject.SetActive(true);
         _rangeWeapon =_weaponContainer._weaponSlot2.weapon.GetComponent<Rangeweapon>() ;
+      //  _pickUpController = _weaponContainer._weaponSlot2.GetComponent<PickUpController>();
         Debug.Log("spacebar slotSelected: 2" );
     }
 
@@ -181,9 +186,9 @@ public class Player : MonoBehaviour
 
     private void SetHoldableItemsInactive()
     {
-        _weaponContainer._weaponSlot1.weapon.SetActive(false);
+        _weaponContainer._weaponSlot1.gameObject.SetActive(false);
         _weaponContainer._weaponSlot1.weapon.GetComponent<Rangeweapon>().reloading = false;
-        _weaponContainer._weaponSlot2.weapon.SetActive(false);
+        _weaponContainer._weaponSlot2.gameObject.SetActive(false);
         _weaponContainer._weaponSlot2.weapon.GetComponent<Rangeweapon>().reloading = false;
     }
 
