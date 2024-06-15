@@ -8,8 +8,14 @@ using UnityEngine.InputSystem.Interactions;
 
 public class Player : MonoBehaviour
 {
-    Rigidbody rigidbody;
-    private float _speed=5;
+    public Rigidbody rb;
+    private float _speed=6;
+    public float maxSpeed = 10;
+
+    public float forceMutiplier = 1f;
+    public float dashForce = 10f;
+    private float dashDuration = 0.5f;
+
     public Vector3 mousePos;
     private Vector2 _move;
     private float _dash;
@@ -124,31 +130,60 @@ public class Player : MonoBehaviour
     private Camera _viewCamera;
     void Start()
     {
-        //  rigidbody = GetComponent<Rigidbody>();
-          _viewCamera = Camera.main;
+        rb = GetComponent<Rigidbody>();
+        _viewCamera = Camera.main;
     }
     
     void Update()
     {  
-        MovePlayer();
         PointerRotation();
+    }
+
+    void FixedUpdate()
+    {
+        MovePlayer();
     }
 
     public void MovePlayer()
     {   
-            Vector3 movement = new Vector3(_move.x, 0f, _move.y);
-           
-            
-            transform.Translate(CalculateMovementDistance(movement), Space.World);
-            if (_dash == 1)
-            {   
-                Vector3 startPosition = transform.position;
-                Vector3 desiredPosition = startPosition + CalculateMovementDistance(movement*40);
-                transform.position = Vector3.Lerp(startPosition, desiredPosition, 1f);
-                _dash = 0;
+        Vector3 movement = new Vector3(_move.x, 0f, _move.y).normalized;
+
+        if (movement.sqrMagnitude > 0)
+        {
+            if (rb.velocity.magnitude < maxSpeed)
+            {
+                rb.velocity = movement * _speed * forceMutiplier;
             }
+        }
+        else { 
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+            
+            
+        if (_dash == 1)
+        {
+            rb.velocity *= dashForce;
+            StartCoroutine(DashAndReduceSpeed());
+            _dash = 0;
+        }
     }
-    
+    private IEnumerator DashAndReduceSpeed()
+    {
+        Vector3 movement = new Vector3(_move.x, 0f, _move.y).normalized;
+
+        float elapsedTime = 0f;
+        while (elapsedTime < dashDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float targetSpeed = Mathf.Lerp(rb.velocity.magnitude, maxSpeed, elapsedTime / dashDuration);
+            rb.velocity = movement.normalized * targetSpeed;
+            yield return null;
+        }
+        // Ensure the final velocity is capped at maxSpeed
+        rb.velocity = movement.normalized * maxSpeed;
+    }
+
 
     public void PointerRotation()
     {   
