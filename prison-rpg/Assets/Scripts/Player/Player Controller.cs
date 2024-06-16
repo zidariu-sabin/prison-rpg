@@ -84,22 +84,24 @@ public class Player : MonoBehaviour
     private void OnStrikePerformed(InputAction.CallbackContext context)
     {
         SetShootingInactive();
-        if (_rangeWeapon.automatic)
-        {
-            if (context.interaction is HoldInteraction)
+        if(_rangeWeapon.isActiveAndEnabled){
+            if (_rangeWeapon.automatic)
             {
-                _rangeWeapon.shooting = true;
+                if (context.interaction is HoldInteraction)
+                {
+                    _rangeWeapon.shooting = true;
+                }
+                else
+                {
+                    _Tap = true;
+                    _rangeWeapon.Shoot(_Tap);
+                }
             }
-            else
+            else if (context.interaction is TapInteraction)
             {
                 _Tap = true;
                 _rangeWeapon.Shoot(_Tap);
             }
-        }
-        else if (context.interaction is TapInteraction)
-        {
-            _Tap = true;
-            _rangeWeapon.Shoot(_Tap);
         }
     }
 
@@ -148,7 +150,10 @@ public class Player : MonoBehaviour
     {
         SetHoldableItemsInactive();
         _weaponContainer._weaponSlot1.gameObject.SetActive(true);
-        _rangeWeapon = _weaponContainer._weaponSlot1.weapon.GetComponent<Rangeweapon>();
+        if (_weaponContainer._weaponSlot1.weapon != null)
+        {
+            _rangeWeapon = _weaponContainer._weaponSlot1.weapon.GetComponent<Rangeweapon>();
+        }
         // _pickUpController = _weaponContainer._weaponSlot1.GetComponent<PickUpController>();
         //Debug.Log("weaponSlot selected: 1");
     }
@@ -157,7 +162,10 @@ public class Player : MonoBehaviour
     {
         SetHoldableItemsInactive();
         _weaponContainer._weaponSlot2.gameObject.SetActive(true);
-        _rangeWeapon = _weaponContainer._weaponSlot2.weapon.GetComponent<Rangeweapon>();
+        if (_weaponContainer._weaponSlot1.weapon != null)
+        {
+            _rangeWeapon = _weaponContainer._weaponSlot1.weapon.GetComponent<Rangeweapon>();
+        }
         // _pickUpController = _weaponContainer._weaponSlot2.GetComponent<PickUpController>();
        // Debug.Log("weaponSlot Selected: 2");
     }

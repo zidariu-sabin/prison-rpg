@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class AmmoUIManager : MonoBehaviour
 {  
    [SerializeField]
    private Text _ammoText;
@@ -23,6 +23,10 @@ public class UIManager : MonoBehaviour
       {  
          UpdateAmmo(_rangeWeapon.bulletsInMagazine, _rangeWeapon.magazines);
          Reloading();
+      }
+      else
+      {
+         _ammoText.text = "Ammo: "+"\u221e";
       }
    }
    public void UpdateAmmo(int bullets, int magazine)

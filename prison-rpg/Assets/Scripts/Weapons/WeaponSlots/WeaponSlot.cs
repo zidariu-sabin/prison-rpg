@@ -5,7 +5,7 @@ using UnityEngine;
 public class WeaponSlot : MonoBehaviour
 {
     
-    public bool full,active;
+    public bool slotFull,active;
     public GameObject weapon;
     public Rangeweapon rangeWeapon;
     void Start()
@@ -15,8 +15,11 @@ public class WeaponSlot : MonoBehaviour
 
     void OnEnable()
     {
-        rangeWeapon = GetComponentInChildren<Rangeweapon>();
-        weapon = rangeWeapon.gameObject;
+        if (GetComponentInChildren<Rangeweapon>() != null)
+        {   
+            rangeWeapon = GetComponentInChildren<Rangeweapon>();
+            weapon = rangeWeapon.gameObject;
+        }
     }
     
     void Update()
