@@ -8,10 +8,7 @@ public class WeaponSlot : MonoBehaviour
     public bool slotFull,active;
     public GameObject weapon;
     public Rangeweapon rangeWeapon;
-    void Start()
-    {
-        
-    }
+  
 
     void OnEnable()
     {

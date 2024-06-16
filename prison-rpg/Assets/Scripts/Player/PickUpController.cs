@@ -102,6 +102,7 @@ public class PickUpController : MonoBehaviour
 
         //Enable script
         _rangeWeaponScript.enabled = true;
+       // _weaponSlot.GetComponent<WeaponSlot>().slotFull = true;
     }
 
     private void Drop()
@@ -129,7 +130,7 @@ public class PickUpController : MonoBehaviour
         //Disable script
         _rangeWeaponScript.enabled = false;
         //setting weaponslot to null so weapon doesn't follow rotation and position of it(sloppy but gets the job done)
-        _weaponSlot = null;
+        //_weaponSlot = null;
         // _weaponSlot.GetComponent<WeaponSlot>().rangeWeapon = null;
     }
 }

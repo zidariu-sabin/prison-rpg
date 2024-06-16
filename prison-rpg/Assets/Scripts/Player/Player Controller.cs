@@ -162,9 +162,9 @@ public class Player : MonoBehaviour
     {
         SetHoldableItemsInactive();
         _weaponContainer._weaponSlot2.gameObject.SetActive(true);
-        if (_weaponContainer._weaponSlot1.weapon != null)
+        if (_weaponContainer._weaponSlot2.weapon != null)
         {
-            _rangeWeapon = _weaponContainer._weaponSlot1.weapon.GetComponent<Rangeweapon>();
+            _rangeWeapon = _weaponContainer._weaponSlot2.weapon.GetComponent<Rangeweapon>();
         }
         // _pickUpController = _weaponContainer._weaponSlot2.GetComponent<PickUpController>();
        // Debug.Log("weaponSlot Selected: 2");
