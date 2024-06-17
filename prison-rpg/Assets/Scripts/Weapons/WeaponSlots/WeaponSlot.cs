@@ -12,11 +12,16 @@ public class WeaponSlot : MonoBehaviour
 
     void OnEnable()
     {
-        if (GetComponentInChildren<Rangeweapon>() != null)
-        {   
-            rangeWeapon = GetComponentInChildren<Rangeweapon>();
-            weapon = rangeWeapon.gameObject;
-        }
+       if (GetComponentInChildren<Rangeweapon>() != null)
+       {
+           slotFull = true;
+           rangeWeapon = GetComponentInChildren<Rangeweapon>();
+           weapon = rangeWeapon.gameObject;
+       }
+       else
+       {
+           slotFull = false;
+       }
     }
     
     void Update()

@@ -1,6 +1,7 @@
 ﻿﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -13,22 +14,21 @@ public class PickUpController : MonoBehaviour
     //we want to use the rigid body of the weapon we see nearby
     private BoxCollider _coll;
     private Rigidbody _rangeWeaponRb;
-    //public Transform player, _weaponSlot;
-    private GameObject _weaponSlot;
+    private GameObject _weaponSlot; 
+    private WeaponSlot _weaponSlotScript;
     public GameObject player;
 
     public float pickUpRange=15;
     public float dropForwardForce, dropUpwardForce;
 
     public bool equipped;
-    public static bool slotFull;
    
 
 
     private void OnEnable()
     {
         //Setup
-        _weaponSlot = player.GetComponentInChildren<WeaponContainer>().gameObject.GetComponentInChildren<WeaponSlot>().gameObject; 
+        InitializeWeaponSlot();
         _rangeWeaponScript = GetComponent<Rangeweapon>();
         _rangeWeaponRb = _rangeWeaponScript.rb;
         _coll = _rangeWeaponScript.coll;
@@ -39,7 +39,7 @@ public class PickUpController : MonoBehaviour
 
     private void Start()
     {        
-
+        InitializeWeaponSlot();
         if (!equipped)
         {
             _rangeWeaponScript.enabled = false;
@@ -52,8 +52,13 @@ public class PickUpController : MonoBehaviour
             _rangeWeaponScript.enabled = true;
             _rangeWeaponRb.isKinematic = true;
             _coll.isTrigger = true;
-            slotFull = true;
+            _weaponSlotScript.slotFull = true;
         }
+    }
+
+    private void InitializeWeaponSlot()
+    {
+        _weaponSlotScript = player.GetComponentInChildren<WeaponContainer>().gameObject.GetComponentInChildren<WeaponSlot>();
     }
     
 
@@ -62,10 +67,10 @@ public class PickUpController : MonoBehaviour
         //Check if player is in range and "E" is pressed
        if(equipped)
        {
-           transform.rotation = _weaponSlot.transform.rotation;
+           transform.rotation = _weaponSlotScript.gameObject.transform.rotation;
        }
         
-        if (!equipped  && player.GetComponent<Player>().equip!=0 && !slotFull)
+        if (!equipped  && player.GetComponent<Player>().equip!=0 /* && !slotFull */ && !_weaponSlotScript.slotFull)
         {
             Vector3 distanceToPlayer = player.transform.position - transform.position;
             Debug.Log(distanceToPlayer.magnitude);
@@ -81,17 +86,16 @@ public class PickUpController : MonoBehaviour
             Drop();
         }
     }
-
+    
+    
     private void PickUp()
     {
+        InitializeWeaponSlot();
         equipped = true;
-        slotFull = true;
-
-        _weaponSlot = player.GetComponentInChildren<WeaponContainer>().GetComponentInChildren<WeaponSlot>().gameObject;
+        _weaponSlotScript.slotFull = true;
         
-
         //Make weapon a child of the camera and move it to default position
-        transform.SetParent(_weaponSlot.transform);
+        transform.SetParent(_weaponSlotScript.gameObject.transform);
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.Euler(Vector3.zero);
         transform.localScale = Vector3.one;
@@ -102,13 +106,14 @@ public class PickUpController : MonoBehaviour
 
         //Enable script
         _rangeWeaponScript.enabled = true;
+        
        // _weaponSlot.GetComponent<WeaponSlot>().slotFull = true;
     }
 
     private void Drop()
     {
         equipped = false;
-        slotFull = false;
+        _weaponSlotScript.slotFull = false;
 
         //Set parent to null
         transform.SetParent(null);
@@ -121,16 +126,16 @@ public class PickUpController : MonoBehaviour
         _rangeWeaponRb.velocity = player.GetComponent<Rigidbody>().velocity;
 
         //AddForce
-        _rangeWeaponRb.AddForce(_weaponSlot.transform.forward * dropForwardForce, ForceMode.Impulse);
-        _rangeWeaponRb.AddForce(_weaponSlot.transform.up * dropUpwardForce, ForceMode.Impulse);
+        _rangeWeaponRb.AddForce(_weaponSlotScript.gameObject.transform.forward * dropForwardForce, ForceMode.Impulse);
+        _rangeWeaponRb.AddForce(_weaponSlotScript.gameObject.transform.up * dropUpwardForce, ForceMode.Impulse);
         //Add random rotation
         float random = Random.Range(-1f, 1f);
         _rangeWeaponRb.AddTorque(new Vector3(random, random, random) * 10);
 
         //Disable script
         _rangeWeaponScript.enabled = false;
-        //setting weaponslot to null so weapon doesn't follow rotation and position of it(sloppy but gets the job done)
-        //_weaponSlot = null;
-        // _weaponSlot.GetComponent<WeaponSlot>().rangeWeapon = null;
+        //setting weaponslot.rangeweapon to null so that  it drops the refference on the weapon when dropped(sloppy but gets the job done)
+         _weaponSlotScript.rangeWeapon = null;
+       //  _weaponSlotScript.weapon = null;
     }
 }

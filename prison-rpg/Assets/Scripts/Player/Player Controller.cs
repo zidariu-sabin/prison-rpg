@@ -154,6 +154,10 @@ public class Player : MonoBehaviour
         {
             _rangeWeapon = _weaponContainer._weaponSlot1.weapon.GetComponent<Rangeweapon>();
         }
+        else
+        {
+            _rangeWeapon = null;
+        }
         // _pickUpController = _weaponContainer._weaponSlot1.GetComponent<PickUpController>();
         //Debug.Log("weaponSlot selected: 1");
     }
@@ -165,6 +169,10 @@ public class Player : MonoBehaviour
         if (_weaponContainer._weaponSlot2.weapon != null)
         {
             _rangeWeapon = _weaponContainer._weaponSlot2.weapon.GetComponent<Rangeweapon>();
+        }
+        else
+        {
+            _rangeWeapon = null;
         }
         // _pickUpController = _weaponContainer._weaponSlot2.GetComponent<PickUpController>();
        // Debug.Log("weaponSlot Selected: 2");
