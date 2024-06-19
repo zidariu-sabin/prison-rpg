@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,15 +15,17 @@ public class Rangeweapon : MonoBehaviour
     public float reloadTime=3,range=10000.0f,bulletsPerShot=1;
     public bool automatic;
     public bool shooting=false,reload=false,reloading=false;
-    private Camera _viewCamera;
     public GameObject bullet;
     public Transform bulletSpawnPoint;
+    public Rigidbody rb;
+    public BoxCollider coll;
     
     
-    void Start()
+    void Awake()
     {
         bulletsInMagazine = magazineSize;
-        _viewCamera = Camera.main;
+        rb = GetComponent<Rigidbody>();
+        coll = GetComponent<BoxCollider>();
     }
         
     void FixedUpdate()
