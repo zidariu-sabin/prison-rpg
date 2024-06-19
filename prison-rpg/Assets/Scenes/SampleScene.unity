@@ -976,7 +976,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3383131755243088168, guid: ca3c1a8c1f581324bb38d0d761ad6fe0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.37
+      value: 13.5
       objectReference: {fileID: 0}
     - target: {fileID: 3383131755243088168, guid: ca3c1a8c1f581324bb38d0d761ad6fe0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1702,7 +1702,7 @@ MonoBehaviour:
   roomOffset: 0
   wallVertical: {fileID: 8753675751577585064, guid: 76257fc4964cd484989e3a56a342b94e, type: 3}
   wallHorizontal: {fileID: 2983560248429768675, guid: 0b84e1940b269ca4fbec190d930348ae, type: 3}
-  playerPrefab: {fileID: 0}
+  playerPrefab: {fileID: 1773921810}
 --- !u!64 &1030650607
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3066,7 +3066,7 @@ Transform:
   m_GameObject: {fileID: 1773921810}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.059999943, y: 0.879, z: -13.74}
+  m_LocalPosition: {x: 24.57, y: 0.879, z: 5.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3308,9 +3308,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2012896537}
   - component: {fileID: 2012896538}
-  - component: {fileID: 2012896542}
   - component: {fileID: 2012896541}
   - component: {fileID: 2012896540}
+  - component: {fileID: 2012896542}
   m_Layer: 6
   m_Name: Pistol
   m_TagString: Untagged
@@ -3615,7 +3615,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3383131755243088168, guid: ca3c1a8c1f581324bb38d0d761ad6fe0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.370001
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 3383131755243088168, guid: ca3c1a8c1f581324bb38d0d761ad6fe0, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3623,7 +3623,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3383131755243088168, guid: ca3c1a8c1f581324bb38d0d761ad6fe0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.9
+      value: 27.5
       objectReference: {fileID: 0}
     - target: {fileID: 3383131755243088168, guid: ca3c1a8c1f581324bb38d0d761ad6fe0, type: 3}
       propertyPath: m_LocalRotation.w
