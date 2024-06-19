@@ -1,17 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Target : MonoBehaviour
 {
-    public float health=100;
+    public float maxHealth=100;
+    public float currentHealth;
+    public bool valid = true;
 
     public void TakeDamage(float damage)
     {
-        health -= damage;
-        if (health <=0)
+        currentHealth -= damage;
+    }
+
+    private void Awake()
+    {
+        currentHealth = maxHealth;
+    }
+
+    void Update()
+    {
+        if (currentHealth <= 0 && valid)
         {
-            Destroy(gameObject);
+            if (currentHealth <= 0)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
